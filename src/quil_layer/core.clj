@@ -41,20 +41,20 @@
   (q/background 0)
   ; setup function returns initial state. It contains
   ; circle color and position.
-  {:layer (->MyLayer {:color 0 :angle 0})})
+  {:layer (->MyLayer (atom {:color 0 :angle 0}))})
 
 (defn update-layer [layer]
-  (let [new-state (update-layer-state layer (:state layer))
-      new-layer (assoc layer :state new-state)]
-    new-layer))
+  (let [state (:state layer)
+        new-state (update-layer-state layer @state)]
+      (reset! state new-state)))
 
 (defn update-state [state]
-  (let [layer (:layer state)
-        new-layer (update-layer layer)]
-    {:layer new-layer}))
+  (let [layer (:layer state)]
+    (update-layer layer)
+    state))
 
 (defn draw-layer [layer]
-    (draw-layer-state layer (:state layer)))
+    (draw-layer-state layer @(:state layer)))
 
 (defn draw-state [state]
   (let [layer (:layer state)]
