@@ -1,44 +1,15 @@
 (ns quil-layer.core
   (:require [quil.core :as q]
-            [quil.middleware :as m]))
-
-(defprotocol Layer
-  (update-layer-state [this state])
-  (draw-layer-state [this state]))
-
-(defrecord MyLayer [state]
-  Layer
-  (update-layer-state [this state]
-    ; Update sketch state by changing circle color and position.
-    {:color (mod (+ (:color state) 0.7) 255)
-     :angle (+ (:angle state) 0.1)})
-
-  (draw-layer-state [this state]
-    ; Clear the sketch by filling it with light-grey color.
-    ;(q/background 240)
-
-    (q/no-stroke)
-    (q/fill 0 2)
-    (q/rect 0 0 (q/width) (q/height))
-
-    ; Set circle color.
-    (q/fill (:color state) 255 255)
-    ; Calculate x and y coordinates of the circle.
-    (let [angle (:angle state)
-          x (* 150 (q/cos angle))
-          y (* 150 (q/sin angle))]
-      ; Move origin point to the center of the sketch.
-      (q/with-translation [(/ (q/width) 2)
-                           (/ (q/height) 2)]
-        ; Draw the circle.
-        (q/ellipse x y 100 100)))))
+            [quil.middleware :as m])
+  (:use [quil-layer.layer]))
 
 (defn setup []
   ; Set frame rate to 30 frames per second.
   (q/frame-rate 30)
   ; Set color mode to HSB (HSV) instead of default RGB.
   ;(q/color-mode :rgb)
-  (q/background 0)
+  (q/color-mode :hsb)
+  (q/background 128)
   ; setup function returns initial state. It contains
   ; circle color and position.
   {:layer (->MyLayer (atom {:color 0 :angle 0}))})
