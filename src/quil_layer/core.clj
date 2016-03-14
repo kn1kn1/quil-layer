@@ -1,8 +1,7 @@
 (ns quil-layer.core
   (:require [quil.core :as q]
             [quil.middleware :as m])
-  (:use [quil-layer.layer]
-    [quil-layer.my-layer]))
+  (:use [quil-layer layer my-layer]))
 
 (defn setup []
   ; Set frame rate to 30 frames per second.
@@ -10,6 +9,7 @@
   ; Set color mode to HSB (HSV) instead of default RGB.
   ;(q/color-mode :rgb)
   (q/color-mode :hsb)
+  ; (q/background 128 255 255)
   (q/background 128)
   ; setup function returns initial state. It contains
   ; circle color and position.
