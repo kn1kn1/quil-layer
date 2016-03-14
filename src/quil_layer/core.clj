@@ -1,7 +1,8 @@
 (ns quil-layer.core
   (:require [quil.core :as q]
             [quil.middleware :as m])
-  (:use [quil-layer.layer]))
+  (:use [quil-layer.layer]
+    [quil-layer.my-layer]))
 
 (defn setup []
   ; Set frame rate to 30 frames per second.
