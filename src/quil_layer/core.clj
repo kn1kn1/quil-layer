@@ -5,6 +5,12 @@
 
 (def layers (atom []))
 
+(defn- add-layer [layer]
+  (let [state (:state layer)
+        new-state (setup-layer layer)]
+    (reset! state new-state)
+    (swap! layers conj layer)))
+
 (defn- update-layer [layer]
   (let [state (:state layer)
         new-state (update-layer-state layer @state)]
@@ -12,12 +18,6 @@
 
 (defn- draw-layer [layer]
     (draw-layer-state layer @(:state layer)))
-
-(defn- add-layer [layer]
-  (let [state (:state layer)
-        new-state (setup-layer layer)]
-    (reset! state new-state)
-    (swap! layers conj layer)))
 
 (defn setup []
   ; Set frame rate to 30 frames per second.
@@ -28,6 +28,8 @@
   ; (q/background 128 255 255)
   (q/background 128)
 
+  (let [layer (->MyLayer (atom {}))]
+    (add-layer layer))
   (let [layer (->MyLayer2 (atom {}))]
     (add-layer layer)))
 
