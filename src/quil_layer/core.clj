@@ -18,19 +18,6 @@
 (defn- add-layer [layer]
   (add-layer-to-top layer))
 
-(defn- setup-layer [layer]
-  (let [state (:state layer)
-        new-state (setup-layer-state layer)]
-    (reset! state new-state)))
-
-(defn- update-layer [layer]
-  (let [state (:state layer)
-        new-state (update-layer-state layer @state)]
-    (reset! state new-state)))
-
-(defn- draw-layer [layer]
-  (draw-layer-state layer @(:state layer)))
-
 (defn setup []
   ; Set frame rate to 30 frames per second.
   (q/frame-rate 30)
