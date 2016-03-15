@@ -34,12 +34,11 @@
     (add-layer layer)))
 
 (defn update-state [state]
-  ;(println layers)
   (dorun (for [layer @layers] (update-layer layer)))
   state)
 
 (defn draw-state [state]
-  (dorun(for [layer @layers] (draw-layer layer))))
+  (dorun (for [layer @layers] (draw-layer layer))))
 
 (q/defsketch quil-layer
   :title "You spin my circle right round"
