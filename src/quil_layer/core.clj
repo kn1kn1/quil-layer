@@ -31,16 +31,16 @@
   (remove-layer mylayer-rec)
   )
 
-
 (comment
-  (let [layer (->MyLayer (atom {}))]
-    (setup-layer layer)
-    (add-layer layer)))
-
+  (do
+    (def mylayer-rec2 (->MyLayer2 (atom {})))
+    (let [layer mylayer-rec2]
+      (setup-layer layer)
+      (add-layer layer)))
+  )
 (comment
-  (let [layer (->MyLayer2 (atom {}))]
-    (setup-layer layer)
-    (add-layer-to-bottom layer)))
+  (remove-layer mylayer-rec2)
+  )
 
 (q/defsketch quil-layer
   :title "You spin my circle right round"
