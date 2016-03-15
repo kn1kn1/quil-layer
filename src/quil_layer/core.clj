@@ -1,7 +1,7 @@
 (ns quil-layer.core
   (:require [quil.core :as q]
             [quil.middleware :as m])
-  (:use [quil-layer layer my-layer]))
+  (:use [quil-layer layer my-layer my-layer2]))
 
 (defn setup []
   ; Set frame rate to 30 frames per second.
@@ -12,7 +12,7 @@
   ; (q/background 128 255 255)
   (q/background 128)
 
-  (let [layer (->MyLayer (atom {}))
+  (let [layer (->MyLayer2 (atom {}))
         state (:state layer)
         new-state (setup-layer layer)]
     (reset! state new-state)
