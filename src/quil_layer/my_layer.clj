@@ -2,12 +2,22 @@
   (:require [quil.core :as q])
   (:use [quil-layer.layer]))
 
-(defn- my-update [state]
+(defn- setup []
+  ; Set frame rate to 30 frames per second.
+  (q/frame-rate 30)
+  ; Set color mode to HSB (HSV) instead of default RGB.
+  (q/color-mode :hsb)
+  ; setup function returns initial state. It contains
+  ; circle color and position.
+  {:color 0
+   :angle 0})
+
+(defn- update-state [state]
   ; Update sketch state by changing circle color and position.
   {:color (mod (+ (:color state) 0.7) 255)
    :angle (+ (:angle state) 0.1)})
 
-(defn- my-draw [state]
+(defn- draw-state [state]
   ; Clear the sketch by filling it with light-grey color.
   ;(q/background 240)
 
@@ -30,7 +40,9 @@
 
 (defrecord MyLayer [state]
   Layer
+  (setup-layer [this]
+    (setup))
   (update-layer-state [this state]
-    (my-update state))
+    (update-state state))
   (draw-layer-state [this state]
-    (my-draw state)))
+    (draw-state state)))

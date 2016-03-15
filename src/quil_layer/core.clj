@@ -11,9 +11,13 @@
   (q/color-mode :hsb)
   ; (q/background 128 255 255)
   (q/background 128)
-  ; setup function returns initial state. It contains
-  ; circle color and position.
-  {:layer (->MyLayer (atom {:color 0 :angle 0}))})
+
+  (let [layer (->MyLayer (atom {}))
+        state (:state layer)
+        new-state (setup-layer layer)]
+    (reset! state new-state)
+    {:layer layer})
+  )
 
 (defn update-layer [layer]
   (let [state (:state layer)
