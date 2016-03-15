@@ -1,7 +1,8 @@
 (ns quil-layer.core
   (:require [quil.core :as q]
             [quil.middleware :as m])
-  (:use [quil-layer layer layers layer-example layer-example2]))
+  (:use [quil-layer layer layers]
+        [quil-layer.layers fadeout-layer layer-example layer-example2]))
 
 (defn setup []
   ; Set frame rate to 30 frames per second.
@@ -37,6 +38,15 @@
       (add-layer layer)))
   (remove-layer layerex2)
   )
+
+  (comment
+    (do
+      (def fadeoutlayer (->FadeoutLayer (atom {})))
+      (let [layer fadeoutlayer]
+        (setup-layer layer)
+        (add-layer layer)))
+    (remove-layer fadeoutlayer)
+    )
 
 (q/defsketch quil-layer
   :title "You spin my circle right round"

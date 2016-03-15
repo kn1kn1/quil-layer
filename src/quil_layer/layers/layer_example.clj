@@ -1,4 +1,4 @@
-(ns quil-layer.layer-example
+(ns quil-layer.layers.layer-example
   (:require [quil.core :as q])
   (:use [quil-layer.layer]))
 
