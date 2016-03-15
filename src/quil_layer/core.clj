@@ -11,13 +11,7 @@
   (q/color-mode :hsb)
   ; (q/background 128 255 255)
   (q/background 128)
-
-  (let [layer (->MyLayer (atom {}))]
-    (setup-layer layer)
-    (add-layer layer))
-  (let [layer (->MyLayer2 (atom {}))]
-    (setup-layer layer)
-    (add-layer-to-bottom layer)))
+)
 
 (defn update-state [state]
   (update-layers)
@@ -25,6 +19,16 @@
 
 (defn draw-state [state]
   (draw-layers))
+
+(comment
+  (let [layer (->MyLayer (atom {}))]
+    (setup-layer layer)
+    (add-layer layer)))
+
+(comment
+  (let [layer (->MyLayer2 (atom {}))]
+    (setup-layer layer)
+    (add-layer-to-bottom layer)))
 
 (q/defsketch quil-layer
   :title "You spin my circle right round"

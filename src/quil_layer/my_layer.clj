@@ -3,10 +3,10 @@
   (:use [quil-layer.layer]))
 
 (defn- setup []
-  ; Set frame rate to 30 frames per second.
-  (q/frame-rate 30)
-  ; Set color mode to HSB (HSV) instead of default RGB.
-  (q/color-mode :hsb)
+  ; ; Set frame rate to 30 frames per second.
+  ; (q/frame-rate 30)
+  ; ; Set color mode to HSB (HSV) instead of default RGB.
+  ; (q/color-mode :hsb)
   ; setup function returns initial state. It contains
   ; circle color and position.
   {:color 0
