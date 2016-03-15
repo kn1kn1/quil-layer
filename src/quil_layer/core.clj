@@ -21,6 +21,18 @@
   (draw-layers))
 
 (comment
+  (do
+    (def mylayer-rec (->MyLayer (atom {})))
+    (let [layer mylayer-rec]
+      (setup-layer layer)
+      (add-layer layer)))
+  )
+(comment
+  (remove-layer mylayer-rec)
+  )
+
+
+(comment
   (let [layer (->MyLayer (atom {}))]
     (setup-layer layer)
     (add-layer layer)))

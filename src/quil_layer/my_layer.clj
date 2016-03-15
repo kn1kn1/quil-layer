@@ -23,7 +23,7 @@
 
   (q/no-stroke)
   (q/color-mode :hsb)
-  (q/fill (.backgroundColor (q/current-graphics)) 1)
+  (q/fill (.backgroundColor (q/current-graphics)) 100)
   (q/rect 0 0 (q/width) (q/height))
 
   ; ; Set circle color.
