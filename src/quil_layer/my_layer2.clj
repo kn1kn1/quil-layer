@@ -24,15 +24,15 @@
   (q/fill (:color state) 255 255)
   (q/with-translation [(/ (q/width) 2)
                        (/ (q/height) 2)]
-  ; Draw the circle.
-  (q/ellipse 0 0 (* 2 (:color state)) (* 2 (:color state))))
-)
+    ; Draw the circle.
+    (q/ellipse 0 0 (* 2 (:color state)) (* 2 (:color state))))
+  )
 
 (defrecord MyLayer2 [state]
   Layer
   (setup-layer-state [this]
-    (setup))
+                     (setup))
   (update-layer-state [this state]
-    (update-state state))
+                      (update-state state))
   (draw-layer-state [this state]
-    (draw-state state)))
+                    (draw-state state)))

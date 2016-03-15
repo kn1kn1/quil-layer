@@ -43,13 +43,13 @@
   (q/fill 255)
   ; Draw the circle.
   (q/ellipse 0 0 (* 2 (:color state)) (* 2 (:color state)))
-)
+  )
 
 (defrecord MyLayer [state]
   Layer
   (setup-layer-state [this]
-    (setup))
+                     (setup))
   (update-layer-state [this state]
-    (update-state state))
+                      (update-state state))
   (draw-layer-state [this state]
-    (draw-state state)))
+                    (draw-state state)))
