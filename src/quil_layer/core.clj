@@ -1,22 +1,7 @@
 (ns quil-layer.core
   (:require [quil.core :as q]
             [quil.middleware :as m])
-  (:use [quil-layer layer my-layer my-layer2]))
-
-(defonce layers (atom []))
-
-(defn- add-layer-to-bottom [layer]
-  (let [new-layers (into [] (concat [layer] @layers))]
-    (println new-layers)
-    (reset! layers new-layers)))
-
-(defn- add-layer-to-top [layer]
-  (let [new-layers (conj @layers layer)]
-    (println new-layers)
-    (reset! layers new-layers)))
-
-(defn- add-layer [layer]
-  (add-layer-to-top layer))
+  (:use [quil-layer layer layers my-layer my-layer2]))
 
 (defn setup []
   ; Set frame rate to 30 frames per second.
@@ -35,11 +20,11 @@
     (add-layer-to-bottom layer)))
 
 (defn update-state [state]
-  (dorun (for [layer @layers] (update-layer layer)))
+  (update-layers)
   state)
 
 (defn draw-state [state]
-  (dorun (for [layer @layers] (draw-layer layer))))
+  (draw-layers))
 
 (q/defsketch quil-layer
   :title "You spin my circle right round"
