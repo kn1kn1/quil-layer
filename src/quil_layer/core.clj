@@ -1,7 +1,7 @@
 (ns quil-layer.core
   (:require [quil.core :as q]
             [quil.middleware :as m])
-  (:use [quil-layer layer layers my-layer my-layer2]))
+  (:use [quil-layer layer layers layer-example layer-example2]))
 
 (defn setup []
   ; Set frame rate to 30 frames per second.
@@ -22,24 +22,20 @@
 
 (comment
   (do
-    (def mylayer-rec (->MyLayer (atom {})))
-    (let [layer mylayer-rec]
+    (def layerex (->LayerExample (atom {})))
+    (let [layer layerex]
       (setup-layer layer)
       (add-layer layer)))
-  )
-(comment
-  (remove-layer mylayer-rec)
+  (remove-layer layerex)
   )
 
 (comment
   (do
-    (def mylayer-rec2 (->MyLayer2 (atom {})))
-    (let [layer mylayer-rec2]
+    (def layerex2 (->LayerExample2 (atom {})))
+    (let [layer layerex2]
       (setup-layer layer)
       (add-layer layer)))
-  )
-(comment
-  (remove-layer mylayer-rec2)
+  (remove-layer layerex2)
   )
 
 (q/defsketch quil-layer

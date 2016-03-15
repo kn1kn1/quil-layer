@@ -1,4 +1,4 @@
-(ns quil-layer.my-layer
+(ns quil-layer.layer-example
   (:require [quil.core :as q])
   (:use [quil-layer.layer]))
 
@@ -45,7 +45,7 @@
   (q/ellipse 0 0 (* 2 (:color state)) (* 2 (:color state)))
   )
 
-(defrecord MyLayer [state]
+(defrecord LayerExample [state]
   Layer
   (setup-layer-state [this]
                      (setup))
