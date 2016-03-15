@@ -3,6 +3,16 @@
             [quil.middleware :as m])
   (:use [quil-layer layer my-layer my-layer2]))
 
+(def layers (atom []))
+
+(defn- update-layer [layer]
+  (let [state (:state layer)
+        new-state (update-layer-state layer @state)]
+      (reset! state new-state)))
+
+(defn- draw-layer [layer]
+    (draw-layer-state layer @(:state layer)))
+
 (defn setup []
   ; Set frame rate to 30 frames per second.
   (q/frame-rate 30)
@@ -16,25 +26,15 @@
         state (:state layer)
         new-state (setup-layer layer)]
     (reset! state new-state)
-    {:layer layer})
-  )
-
-(defn update-layer [layer]
-  (let [state (:state layer)
-        new-state (update-layer-state layer @state)]
-      (reset! state new-state)))
+    (swap! layers conj layer)))
 
 (defn update-state [state]
-  (let [layer (:layer state)]
-    (update-layer layer)
-    state))
-
-(defn draw-layer [layer]
-    (draw-layer-state layer @(:state layer)))
+  ;(println layers)
+  (dorun (for [layer @layers] (update-layer layer)))
+  state)
 
 (defn draw-state [state]
-  (let [layer (:layer state)]
-    (draw-layer layer)))
+  (dorun(for [layer @layers] (draw-layer layer))))
 
 (q/defsketch quil-layer
   :title "You spin my circle right round"
