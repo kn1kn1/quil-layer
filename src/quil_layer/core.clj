@@ -3,13 +3,25 @@
             [quil.middleware :as m])
   (:use [quil-layer layer my-layer my-layer2]))
 
-(def layers (atom []))
+(defonce layers (atom []))
+
+(defn- add-layer-to-bottom [layer]
+  (let [new-layers (into [] (concat [layer] @layers))]
+    (println new-layers)
+    (reset! layers new-layers)))
+
+(defn- add-layer-to-top [layer]
+  (let [new-layers (conj @layers layer)]
+    (println new-layers)
+    (reset! layers new-layers)))
 
 (defn- add-layer [layer]
+  (add-layer-to-top layer))
+
+(defn- setup-layer [layer]
   (let [state (:state layer)
-        new-state (setup-layer layer)]
-    (reset! state new-state)
-    (swap! layers conj layer)))
+        new-state (setup-layer-state layer)]
+    (reset! state new-state)))
 
 (defn- update-layer [layer]
   (let [state (:state layer)
@@ -29,9 +41,11 @@
   (q/background 128)
 
   (let [layer (->MyLayer (atom {}))]
+    (setup-layer layer)
     (add-layer layer))
   (let [layer (->MyLayer2 (atom {}))]
-    (add-layer layer)))
+    (setup-layer layer)
+    (add-layer-to-bottom layer)))
 
 (defn update-state [state]
   (dorun (for [layer @layers] (update-layer layer)))

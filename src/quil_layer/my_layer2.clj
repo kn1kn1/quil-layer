@@ -30,7 +30,7 @@
 
 (defrecord MyLayer2 [state]
   Layer
-  (setup-layer [this]
+  (setup-layer-state [this]
     (setup))
   (update-layer-state [this state]
     (update-state state))
