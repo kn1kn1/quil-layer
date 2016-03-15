@@ -41,10 +41,11 @@
 
   (comment
     (do
-      (def fadeoutlayer (->FadeoutLayer (atom {})))
+      (def fadeoutlayer (->FadeoutLayer 5000 (atom {})))
       (let [layer fadeoutlayer]
         (setup-layer layer)
         (add-layer layer)))
+    (println fadeoutlayer)
     (remove-layer fadeoutlayer)
     )
 
