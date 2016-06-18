@@ -3,7 +3,7 @@
 
 (defonce layers (atom []))
 
-(defn- reset-layers [new-layers]
+(defn reset-layers [new-layers]
   (println new-layers)
   (reset! layers new-layers))
 
