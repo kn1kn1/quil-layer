@@ -2,54 +2,39 @@
   (:require [quil.core :as q])
   (:use [quil-layer.layer]))
 
-(defn- setup []
-  ; ; Set frame rate to 30 frames per second.
-  ; (q/frame-rate 30)
-  ; ; Set color mode to HSB (HSV) instead of default RGB.
-  ; (q/color-mode :hsb)
-  ; setup function returns initial state. It contains
-  ; circle color and position.
-  {:color 0
-   :angle 0})
+(def num-of-lines (atom 100))
 
-(defn- update-state [state]
-  ; Update sketch state by changing circle color and position.
-  {:color (mod (+ (:color state) 0.7) 255)
-   :angle (+ (:angle state) 0.1)})
+(defn- setup [] {})
+(defn- update-state [state] {})
 
 (defn- draw-state [state]
-  ; Clear the sketch by filling it with light-grey color.
-  ;(q/background 240)
+  (let [w (/ (q/height) @num-of-lines)
+        r (/ w 3)]
+    ;;(q/smooth)
+    (q/color-mode :rgb)
+    ;;    (q/background 200)
+    ;;(q/fill 220)
+    (q/stroke 220)
+    (q/stroke-weight w)
 
-  (q/no-stroke)
-  (q/color-mode :hsb)
-  (q/fill (.backgroundColor (q/current-graphics)) 100)
-  (q/rect 0 0 (q/width) (q/height))
-
-  ; ; Set circle color.
-  ; (q/fill (:color state) 255 255)
-  ; ; Calculate x and y coordinates of the circle.
-  ; (let [angle (:angle state)
-  ;       x (* 150 (q/cos angle))
-  ;       y (* 150 (q/sin angle))]
-  ;   ; Move origin point to the center of the sketch.
-  ;   (q/with-translation [(/ (q/width) 2)
-  ;                        (/ (q/height) 2)]
-  ;     ; Draw the circle.
-  ;     (q/ellipse x y 100 100)))
-
-  ; Set circle color.
-  (q/color-mode :rgb)
-  (q/fill 255)
-  ; Draw the circle.
-  (q/ellipse 0 0 (* 2 (:color state)) (* 2 (:color state)))
+    (if (= (mod (q/frame-count) 1) 0)
+      (dorun
+       (for [i (range 0 @num-of-lines)]
+         (let [top 2
+               left 2
+               x left
+               y (+ (* i (/ (q/height) @num-of-lines)) (q/random (- r) r))
+               x2 (- (q/width) left)
+               y2 (+ (* i (/ (q/height) @num-of-lines)) (q/random (- r) r))]
+           (q/line x y x2 y2))
+         ))))
   )
 
 (defrecord LayerExample [state]
   Layer
   (setup-layer-state [this]
-                     (setup))
+    (setup))
   (update-layer-state [this state]
-                      (update-state state))
+    (update-state state))
   (draw-layer-state [this state]
-                    (draw-state state)))
+    (draw-state state)))

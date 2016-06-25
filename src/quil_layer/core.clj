@@ -2,17 +2,12 @@
   (:require [quil.core :as q]
             [quil.middleware :as m])
   (:use [quil-layer layer layers]
-        [quil-layer.layers fadeout-layer layer-example layer-example2]))
+        [quil-layer.layers background-layer fadeout-layer layer-example text-layer]))
 
 (defn setup []
-  ; Set frame rate to 30 frames per second.
   (q/frame-rate 30)
-  ; Set color mode to HSB (HSV) instead of default RGB.
-  ;(q/color-mode :rgb)
-  (q/color-mode :hsb)
-  ; (q/background 128 255 255)
-  (q/background 128)
-)
+  (q/color-mode :rgb)
+  (q/background 128))
 
 (defn update-state [state]
   (update-layers)
@@ -21,44 +16,58 @@
 (defn draw-state [state]
   (draw-layers))
 
+(q/defsketch quil-layer
+  :title "quil-layer example"
+  :size :fullscreen
+  :setup setup
+  :update update-state
+  :draw draw-state
+  :middleware [m/fun-mode])
+
 (comment
+  ;; to add background-layer, evaluate following do clause.
+  (do
+    (def bglayer (->BackgroundLayer (atom {})))
+    (let [layer bglayer]
+      (setup-layer layer)
+      ;; (reset! oneoff-fn #(do (q/color-mode :rgb) (q/background 255 155 155)))
+      ;; (reset! oneoff-fn #(do (q/color-mode :rgb) (q/background 100 100 100)))
+      ;; (reset! bg-alpha 10)
+      (add-layer layer)))
+  ;; to remove background-layer, evaluate following clause.
+  (remove-layer bglayer)
+  )
+
+(comment
+  ;; to add example-layer, evaluate following do clause.
   (do
     (def layerex (->LayerExample (atom {})))
     (let [layer layerex]
       (setup-layer layer)
       (add-layer layer)))
+  ;; to remove example-layer, evaluate following clause.
   (remove-layer layerex)
   )
 
 (comment
+  ;; to add text-layer, evaluate following do clause.
   (do
-    (def layerex2 (->LayerExample2 (atom {})))
-    (let [layer layerex2]
+    (def textlayer (->TextLayer (atom {})))
+    (let [layer textlayer]
       (setup-layer layer)
       (add-layer layer)))
-  (remove-layer layerex2)
+  ;; to remove text-layer, evaluate following clause.
+  (remove-layer textlayer)
   )
 
-  (comment
-    (do
-      (def fadeoutlayer (->FadeoutLayer 5000 (atom {})))
-      (let [layer fadeoutlayer]
-        (setup-layer layer)
-        (add-layer layer)))
-    (println fadeoutlayer)
-    (remove-layer fadeoutlayer)
-    )
-
-(q/defsketch quil-layer
-  :title "You spin my circle right round"
-  :size [500 500]
-  ; setup function called only once, during sketch initialization.
-  :setup setup
-  ; update-state is called on each iteration before draw-state.
-  :update update-state
-  :draw draw-state
-  ; :features [:keep-on-top]
-  ; This sketch uses functional-mode middleware.
-  ; Check quil wiki for more info about middlewares and particularly
-  ; fun-mode.
-  :middleware [m/fun-mode])
+(comment
+  ;; to add fadeout-layer, evaluate following do clause.
+  (do
+    (def fadeoutlayer (->FadeoutLayer 3000 (atom {})))
+    (let [layer fadeoutlayer]
+      (setup-layer layer)
+      (add-layer layer)))
+  ;; (println fadeoutlayer)
+  ;; to remove fadeout-layer, evaluate following clause.
+  (remove-layer fadeoutlayer)
+  )
